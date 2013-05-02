@@ -1,8 +1,9 @@
 define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin","dojo/hash",
   "dojo/_base/xhr","dojo/_base/array", "dojo/_base/lang", "dojo/on","dojo/text!./templates/ProductLayout.html",
-  "dojo/dom-class","dijit/Menu","dijit/MenuItem","dojo/topic","dojo/dom-construct","dijit/PopupMenuItem","dijit/layout/SplitContainer"],
+  "dojo/dom-class","rijit/helpers/FormHelper",
+  "dijit/Menu","dijit/MenuItem","dojo/topic","dojo/dom-construct","dijit/PopupMenuItem","dijit/layout/SplitContainer"],
           function(declare, WidgetBase, TemplatedMixin, WidgetsInTemplateMixin,hash, xhr, array, lang, on,
-                          template,domClass,Menu,MenuItem,topic,domConstruct){
+                          template,domClass,FormHelper,Menu,MenuItem,topic,domConstruct){
   
                   return declare("rijit.controllers.ProductsController", [WidgetBase, TemplatedMixin, WidgetsInTemplateMixin], {
   
@@ -16,7 +17,12 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                                   eval("this."+this.action+"();");
                                   },
                       add:function(){
-                        this.body.innerHTML="this is the body";
+                        var form = new FormHelper();
+                         var formDom = form.create("Product");
+                        domConstruct.place(formDom,this.body,"last");
+                        form.input("name");
+                        form.input("address");
+
                       },
                       list:function(){
                         this.body.innerHTML="this is the list body";
