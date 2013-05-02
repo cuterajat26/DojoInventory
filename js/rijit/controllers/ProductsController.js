@@ -18,10 +18,11 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                                   },
                       add:function(){
                         var form = new FormHelper();
-                         var formDom = form.create("Product");
+                         var formDom = form.createForm("Product");
                         domConstruct.place(formDom,this.body,"last");
                         form.input("name");
                         form.input("address");
+                        form.end("Submit it");
 
                       },
                       list:function(){

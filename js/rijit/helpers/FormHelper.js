@@ -1,18 +1,17 @@
 define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
-  "dijit/form/TextBox","dojo/dom-construct"],
-          function(declare, WidgetBase, TemplatedMixin, WidgetsInTemplateMixin,TextBox,domConstruct){
+  "dijit/form/TextBox","dijit/form/Button","dojo/dom-construct","dojo/_base/lang"],
+          function(declare, WidgetBase, TemplatedMixin, WidgetsInTemplateMixin,TextBox,Button,domConstruct,lang){
   
-                  return declare("rijit.helpers.FormHelper", [WidgetBase, TemplatedMixin, WidgetsInTemplateMixin], {
+                  return declare("rijit.helpers.FormHelper", [WidgetBase], {
   
                          
                            baseClass: "rijitForm",
                       model:null,
                       modelName:null,
                       fields:new Array(),
-
-                      create: function(arg){
+                      createForm: function(arg){
                         this.modelName = arg;
-                        // this.model = eval("new " + arg+"();");
+                         this.model = eval("new " + arg+"();");
                         this.domNode = domConstruct.create("div",{class:"form "+arg});
                         return this.domNode;
                       },
@@ -28,6 +27,18 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                         field.startup();
                         this.fields.push(field);
 
+                      },
+                      end:function(label){
+                        arg={};
+                        arg.label = label;
+                          arg.onClick=lang.hitch(this,"submit");
+                         var divField = domConstruct.create("div", {class:"form-row"}, this.domNode,"last");
+
+                        var button = new Button(arg,divField);
+                        button.startup();
+                      },
+                      submit:function(){
+                        alert("yo");
                       }
                       
 
