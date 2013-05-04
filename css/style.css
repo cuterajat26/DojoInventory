@@ -1,9 +1,14 @@
-   @import url("../js/dijit/themes/claro/claro.css");
+/*   @import url("../js/dijit/themes/claro/claro.css");
+*//*  @import url("../js/dijit/themes/nihilo/nihilo.css");
+*/
+@import url("../js/dijit/themes/soria/soria.css");
    html, body {
     width: 100%;
     height: 100%;
     margin: 0;
-    font:12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
+    font-family: "Segoe UI Web Light","Segoe UI Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","Helvetica Neue",Arial;
+
+    font-size:85%;
 }
 
 .rijitProductNavigation 
@@ -13,15 +18,54 @@
 .rijitProductNavigation .productLayoutTable{
 	width:100%;
 	height:100%;
+	border-spacing: 0px;
 }
 .rijitProductNavigation .productLayoutTable th,tr,td{
-	border: 1px solid black;
+	border: 0px solid black;
 	height:100%;
 	vertical-align: top;
 
 
 }
-.rijitProductNavigation .productLayoutTable td:first-child
+.rijitProductNavigation .productLayoutTable .menuColumn
 {
-	width:10%;
+	width:15%;
+	background-color: #444444;
+
+}
+
+.form-row-field{
+	text-transform:capitalize;
+}
+
+.rijitContentPane{
+	background: none repeat scroll 0 0 #eeeeee;
+	border-top-left-radius: 18px;
+	height: 100%;
+
+}
+.rijit .dijitSplitterH,
+.rijit .dijitGutterH,
+.rijit .dijitTabPaneWrapper{
+	background-color: #444444;
+}
+.rijit .dijitBorderContainer {
+	background-color: #444444;
+	padding: 5px;
+}
+
+.rijit .dijitTabPaneWrapper{
+		border:1px solid #444444;
+}
+
+.rijit .dijitTab {
+    padding:4px 6px 2px 4px;
+    background:none;
+	background-image: -webkit-gradient(linear, 0 0%, 0 70%, from(#444444), to(#111111));
+    position: relative;
+	line-height:normal;
+	margin:0 0px 0 0;	/* space between one tab and the next in top/bottom mode */
+	color: #4A4A4A;
+    border-top: 1px #222222 solid;
+	border-bottom: 1px black solid;
 }

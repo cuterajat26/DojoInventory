@@ -21,7 +21,9 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                          var formDom = form.createForm("Product");
                         domConstruct.place(formDom,this.body,"last");
                         form.input("name");
-                        form.input("address");
+                        form.input("colour");
+                        form.input("quantity");
+                        form.input("price");
                         form.end("Submit it");
 
                       },
