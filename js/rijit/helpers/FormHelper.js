@@ -1,6 +1,6 @@
 define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
-  "dijit/form/TextBox","dijit/form/Button","dojo/dom-construct","dojo/_base/lang","dojo/_base/array"],
-          function(declare, WidgetBase, TemplatedMixin, WidgetsInTemplateMixin,TextBox,Button,domConstruct,lang,array){
+  "dijit/form/ValidationTextBox","dijit/form/Button","dojo/dom-construct","dojo/_base/lang","dojo/_base/array"],
+          function(declare, WidgetBase, TemplatedMixin, WidgetsInTemplateMixin,ValidationTextBox,Button,domConstruct,lang,array){
   
                   return declare("rijit.helpers.FormHelper", null, {
   
@@ -16,7 +16,26 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                         this.domNode = domConstruct.create("div",{class:"form "+arg});
                         return this.domNode;
                       },
+                      _inputFile:function(field,options){
+                        if(typeof options ==="object")
+                          options.id = field;
+                        else{
+                          options = {};
+                          options.id=field;
+                        }
+                        var divField = domConstruct.create("div", {class:"form-row-file"}, this.domNode,"last");
+                        var inputField = domConstruct.create("input", {class:"file",type:"file"}, divField,"last");
+
+                        var labelField = domConstruct.create("div", {class:"title"}, divField,"last");
+
+                        labelField.innerHTML=options.title?options.title:"Drop files here";
+
+                      },
                       input: function(field,options){
+                        if(options && options.type==="file"){
+                          this._inputFile(field,options);
+                          return;
+                        }
                         if(typeof options ==="object")
                           options.id = field;
                         else{
@@ -28,7 +47,17 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                         labelField.innerHTML=field;
                         var labelField = domConstruct.create("div", {class:"form-row-value"}, divField,"last");
 
-                        var field = new TextBox(options,labelField);
+                        options.required=true;
+                        if(this.model.validation[field]['required']===false){
+                          options.required=false;
+                        }
+                        else if(this.model.validation[field]['rule'] !== "notempty"){
+                        options.regExp=this.model.validationHash[this.model.validation[field]['rule']].source;
+                        }
+                        
+                     options.missingMessage = options.invalidMessage=this.model.validation[field]['message'];
+
+                        var field = new ValidationTextBox(options,labelField);
                         field.startup();
                         this.fields.push(field);
 
@@ -42,30 +71,24 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                         });
                         return modelobject;
                       },
-                      end:function(label){
+                      end:function(label,callBack){
                         var arg={
                         label : label,
-                        onClick:lang.hitch(this,"submit")
+                        onClick:lang.hitch(this,"submit",callBack)
                         }
                          var divField = domConstruct.create("div", {class:"form-row"}, this.domNode,"last");
 
                         var button = new Button(arg,divField);
                         button.startup();
                       },
-                      submit:function(){
+                      submit:function(callBack){
                       
                        var formData = this._getData();
                        var model = this.model;
-                         this.model.save(formData, lang.hitch(this,"_saveCallBack"));
+                         this.model.save(formData, callBack);
                       },
                       _saveCallBack:function(status,result){
-                        if(status){
-                        alert(this.modelName+' saved successfully');
-                        }
-                        else if(this.model.validationErrors[0])
-                        {
-                            alert(this.model.validationErrors[0]);
-                        }
+                        
                       }
                       
 

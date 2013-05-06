@@ -8,7 +8,7 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                   return declare("rijit.controllers.ProductsController", [WidgetBase, TemplatedMixin, WidgetsInTemplateMixin], {
   
                          
-                           baseClass: "rijitProductController",
+                           baseClass: "rijitController",
                           templateString: template,
                       
   
@@ -20,11 +20,15 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                         var form = new FormHelper();
                          var formDom = form.createForm("Product");
                         domConstruct.place(formDom,this.body,"last");
-                        form.input("name");
+                        form.input("Image",{title:"Add Image",type:"file"});
+
+                        form.input("name",{width:"50em"});
+
                         form.input("colour");
+
                         form.input("quantity");
                         form.input("price");
-                        form.end("Submit it");
+                        form.end("Submit it",lang.hitch(this,"_addedSuccessfully"));
 
                       },
                       list:function(){
@@ -33,6 +37,9 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
 
                       _onList:function(item){
                          
+                      },
+                      _addedSuccessfully:function(){
+                        alert("heyaa");
                       }
 
                   });
