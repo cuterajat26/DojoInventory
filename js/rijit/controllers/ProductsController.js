@@ -1,9 +1,9 @@
 define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin","dojo/hash",
   "dojo/_base/xhr","dojo/_base/array", "dojo/_base/lang", "dojo/on","dojo/text!./templates/ProductLayout.html",
-  "dojo/dom-class","rijit/helpers/FormHelper",
+  "dojo/dom-class","rijit/helpers/FormHelper","rijit/helpers/FileHelper",
   "dijit/Menu","dijit/MenuItem","dojo/topic","dojo/dom-construct","dijit/PopupMenuItem","dijit/layout/SplitContainer"],
           function(declare, WidgetBase, TemplatedMixin, WidgetsInTemplateMixin,hash, xhr, array, lang, on,
-                          template,domClass,FormHelper,Menu,MenuItem,topic,domConstruct){
+                          template,domClass,FormHelper,FileHelper,Menu,MenuItem,topic,domConstruct){
   
                   return declare("rijit.controllers.ProductsController", [WidgetBase, TemplatedMixin, WidgetsInTemplateMixin], {
   
@@ -75,7 +75,8 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                       _saveFile:function(formData,result,grantedBytes){
                                                 var errorHandler = this._fileErrorHandler;
                         window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-
+var thisFormData= formData;
+var self =this;
                                       window.requestFileSystem(window.PERSISTENT, grantedBytes, function(fs) {
                                       // Duplicate each file the user selected to the app's fs.
 
@@ -85,7 +86,9 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                                           fs.root.getFile(fileName, {create: true, exclusive: true}, function(fileEntry) {
                                             fileEntry.createWriter(function(fileWriter) {
                                               fileWriter.write(f); // Note: write() can take a File or Blob object.
-                                                console.log(fileName);
+                                              thisFormData['Product']['image']=fileName;
+                         self.Product.save(thisFormData, lang.hitch(self,"_addedImageSuccessfully"));
+                                alert("image save successfully: "+fileName);
                                             }, errorHandler);
                                           }, errorHandler);
                                         })(formData['Product']['image']);
@@ -93,25 +96,37 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                                       
                                     }, errorHandler);
                       },
+                      _addedImageSuccessfully: function(status,result){
+                       document.getElementById('debug').innerHTML=  "Product saved successfully";
+                      }
+                      ,
+                      _updateModelWithFileName:function(fileName){
+                                            this.formData['Product']['image']=fileName;
+                                            this.Product.save(this.formData, lang.hitch(this,"_addedImageSuccessfully"));
+                      },
                       _addedSuccessfully:function(status,result){
                         if(!status)
                         alert(this.Product.validationErrors[0]);
                       else{
-                        alert('yes');
                         this.formData['Product']['id']=result.insertId;
 
-                        var formData = this.formData;
                         var self = this;
 
                         if(this.formData['Product']['image'] instanceof File){
                                     //*************************FILE saving**************//
-                                    window.webkitStorageInfo.requestQuota(PERSISTENT, 100*1024*1024, function(grantedBytes) {
-                                          self._saveFile(formData,result,grantedBytes);
-                                          }, function(e) {
-                                            console.log('Error', e);
-                                          });
+                                    var fileName = this.formData['Product']['id']+'_'+this.formData['Product']['image'].name;
+                                    var promise=FileHelper.saveFile(this.formData['Product']['image'],fileName);
+                                    promise.then(function(result){
+                                      self._updateModelWithFileName(result);
+                                      
+                                    });
+                               
                                     
                                     //**************************************************//
+                        }
+                        else{
+                       document.getElementById('debug').innerHTML=  "Product saved successfully";
+
                         }
 
                 
