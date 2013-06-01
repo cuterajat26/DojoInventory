@@ -25,7 +25,7 @@ var errorHandler = function(e){
                                       // Duplicate each file the user selected to the app's fs.
 
                                        
-                                         fs.root.getFile('18_3HD7.jpeg', {}, function(fileEntry) {
+                                         fs.root.getFile('30_Landscape-wallpaper 665.jpg', {}, function(fileEntry) {
 
     // Get a File object representing the file,
     // then use FileReader to read its contents.

@@ -39,62 +39,10 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                       _onList:function(item){
                          
                       },
-                      _fileErrorHandler:function(e){
-                         var msg = '';
-
-                        switch (e.code) {
-                          case FileError.QUOTA_EXCEEDED_ERR:
-                            msg = 'QUOTA_EXCEEDED_ERR';
-                            break;
-                          case FileError.NOT_FOUND_ERR:
-                            msg = 'NOT_FOUND_ERR';
-                            break;
-                          case FileError.SECURITY_ERR:
-                            msg = 'SECURITY_ERR';
-                            break;
-                          case FileError.INVALID_MODIFICATION_ERR:
-                            msg = 'INVALID_MODIFICATION_ERR';
-                            break;
-                          case FileError.INVALID_STATE_ERR:
-                            msg = 'INVALID_STATE_ERR';
-                            break;
-                          default:
-                            msg = 'Unknown Error';
-                            break;
-                        };
-
-                        console.log('Error: ' + msg);
-                        alert('Error: ' + msg);
-
-                      },
                       _addedSubmitted:function(formData){
                         
                     this.formData = formData;
                          this.Product.save(formData, lang.hitch(this,"_addedSuccessfully"));
-                      },
-                      _saveFile:function(formData,result,grantedBytes){
-                                                var errorHandler = this._fileErrorHandler;
-                        window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-var thisFormData= formData;
-var self =this;
-                                      window.requestFileSystem(window.PERSISTENT, grantedBytes, function(fs) {
-                                      // Duplicate each file the user selected to the app's fs.
-
-                                        // Capture current iteration's file in local scope for the getFile() callback.
-                                        (function(f) {
-                                          var fileName = result.insertId+'_'+f.name
-                                          fs.root.getFile(fileName, {create: true, exclusive: true}, function(fileEntry) {
-                                            fileEntry.createWriter(function(fileWriter) {
-                                              fileWriter.write(f); // Note: write() can take a File or Blob object.
-                                              thisFormData['Product']['image']=fileName;
-                         self.Product.save(thisFormData, lang.hitch(self,"_addedImageSuccessfully"));
-                                alert("image save successfully: "+fileName);
-                                            }, errorHandler);
-                                          }, errorHandler);
-                                        })(formData['Product']['image']);
-
-                                      
-                                    }, errorHandler);
                       },
                       _addedImageSuccessfully: function(status,result){
                        document.getElementById('debug').innerHTML=  "Product saved successfully";
@@ -122,7 +70,6 @@ var self =this;
                                     });
                                
                                     
-                                    //**************************************************//
                         }
                         else{
                        document.getElementById('debug').innerHTML=  "Product saved successfully";
