@@ -2,12 +2,15 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Tutorial: Hello Dojo!</title>
-<link rel="stylesheet" type="text/css" href="css/style.css"></head>
+    <title>Stockstitle></title>
     <!-- load Dojo -->
     <script>dojoConfig = {parseOnLoad: true}</script>
     <script src="js/dojo/dojo.js"
                data-dojo-config="async: true"></script>
+<!--                    <link href="js/dojox/mobile/themes/iphone/iphone.css" rel="stylesheet"></link>
+ -->
+                   <link href="js/dojox/mobile/themes/blackberry/blackberry.css" rel="stylesheet"></link>
+
 <script type="text/javascript" src="js/legacy/canvas-toBlob.js"></script>
 <script type="text/javascript" src="js/legacy/FileSaver.js"></script>
 
@@ -15,39 +18,57 @@
                <script type="text/javascript" src="js/legacy/product.js"></script>
 
 <script>
+require(["dojox/mobile/parser", "dojox/mobile/deviceTheme", "dojox/mobile/compat", "dojox/mobile","dojox/mobile/RoundRectList","dojox/mobile/ListItem",
+    "dojox/mobile/FixedSplitter",
+    "dojox/mobile/Pane",
+    "dojox/mobile/ContentPane",
+    "dojox/mobile/Accordion"],
+    function(parser, deviceTheme) {
+ 
+        // Parse the page for widgets!
+        parser.parse();
+    }
+);
 initDB();
-require(["dojo/parser", "dijit/layout/BorderContainer", "dijit/layout/TabContainer", "dijit/layout/AccordionContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionPane"
-	,"rijit/navigation/ProductsNavigation"]);</script>
+
+</script>
+
+
 </head>
-<body class="claro">
-    <div data-dojo-type="dijit/layout/BorderContainer" style="width: 100%; height: 100%;">
-    	    	    		<div id="debug" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'">
-    	    	    			
-</div>
+<body class="mblBackground" style ="overflow: hidden; visibility: visible;">
 
-    	  <div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="region:'center'">
-<div data-dojo-type="rijit/navigation/ProductsNavigation" title="Products" data-dojo-props="region:'leading'"></div>
+<div data-dojo-type="dojox/mobile/FixedSplitter" data-dojo-props='orientation:"H"'>
+  <div data-dojo-type="dojox/mobile/Pane" style="border-right:2px black solid;width:300px;">
+    <h1 data-dojo-type="dojox.mobile.Heading" data-dojo-props="moveTo:'settings'">
+            Navigation
+    </h1>
+    <div data-dojo-type="dojox/mobile/Accordion" data-dojo-props=''>
+    <div data-dojo-type="dojox/mobile/ContentPane" data-dojo-props='label:"Products"'>
+        <ul data-dojo-type="dojox/mobile/RoundRectList" data-dojo-props=''>
+            <li data-dojo-type="dojox/mobile/ListItem" data-dojo-props='label:"Create"'>
+            </li>
+            <li data-dojo-type="dojox/mobile/ListItem" data-dojo-props='label:"Search"'>
+            </li>
 
-        <div data-dojo-type="dijit/layout/ContentPane" title="tab #2">
-        	<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'leading'">
-        		<div data-dojo-type="dijit/layout/AccordionPane" title="Products">accordion pane #1</div>
-        		<div data-dojo-type="dijit/layout/AccordionPane" title="Customers">accordion pane #2</div>
-        		<div data-dojo-type="dijit/layout/AccordionPane" title="Sales">accordion pane #3</div>
-        		<div data-dojo-type="dijit/layout/AccordionPane" title="Purchases">accordion pane #3</div>
-    		</div>
-        </div>
-        <div data-dojo-type="dijit/layout/ContentPane" title="tab #3">
-			<div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'leading'">
-        		<div data-dojo-type="dijit/layout/AccordionPane" title="Products">accordion pane #1</div>
-        		<div data-dojo-type="dijit/layout/AccordionPane" title="Customers">accordion pane #2</div>
-        		<div data-dojo-type="dijit/layout/AccordionPane" title="Sales">accordion pane #3</div>
-        		<div data-dojo-type="dijit/layout/AccordionPane" title="Purchases">accordion pane #3</div>
-    		</div>
-        </div>
+        </ul>
     </div>
-   
-    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'trailing'">Trailing pane</div>
-    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'bottom'">Bottom pane</div>
+    <div data-dojo-type="dojox/mobile/ContentPane" data-dojo-props='label:"Customers"'>
+        <ul data-dojo-type="dojox/mobile/RoundRectList" data-dojo-props=''>
+            <li data-dojo-type="dojox/mobile/ListItem" data-dojo-props='label:"Create"'>
+            </li>
+            <li data-dojo-type="dojox/mobile/ListItem" data-dojo-props='label:"Search"'>
+            </li>
+        </ul>
+    </div>
 </div>
-</body>
+
+  </div>
+  <div data-dojo-type="dojox/mobile/Pane" style="">
+      <h1 data-dojo-type="dojox.mobile.Heading" data-dojo-props="moveTo:'settings'">
+            General
+    </h1>
+  </div>
+</div>
+
+    </body>
 </html>
