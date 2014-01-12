@@ -1,9 +1,9 @@
 define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin","dojo/hash",
   "dojo/_base/xhr","dojo/_base/array", "dojo/_base/lang", "dojo/on","dojo/text!./templates/ProductsNavigation.html",
   "dojo/dom-class","dijit/Menu","dijit/MenuItem","dojo/topic","dojo/dom-construct","dojo/query","dojo/dom-style",
-  "rijit/controllers/ProductsController","dojo/fx","dijit/PopupMenuItem","dijit/layout/SplitContainer","dojo/NodeList-traverse"],
+  "rijit/controllers/ProductsController","components/bongo","dojo/fx","dijit/PopupMenuItem","dijit/layout/SplitContainer","dojo/NodeList-traverse"],
           function(declare, WidgetBase, TemplatedMixin, WidgetsInTemplateMixin,hash, xhr, array, lang, on,
-                          template,domClass,Menu,MenuItem,topic,domConstruct,query,domStyle,ProductsController,coreFx){
+                          template,domClass,Menu,MenuItem,topic,domConstruct,query,domStyle,ProductsController,bongo,coreFx){
   
                   return declare("rijit.navigation.ProductsNavigation", [WidgetBase, TemplatedMixin, WidgetsInTemplateMixin], {
   
@@ -18,6 +18,7 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                       
   
                       postCreate: function(){
+                                  console.log(bongo);
                                   this.inherited(arguments);
                                   console.log(this.mainMenu);
                                   this.items = new Array();
