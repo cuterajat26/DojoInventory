@@ -16,15 +16,115 @@ define(["dojo/_base/declare",
 
     return declare("rijit.model.Model", [], {
 
+        db:null,
+        name: null,
+        version:null,
+        label:null,
+        indexes: null,
+        objectStore: null,
         constructor: function() {
-          window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-          // DON'T use "var indexedDB = ..." if you're not in a function.
-          // Moreover, you may need references to some window.IDB* objects:
-          window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
-          window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
-          // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
-      }
+          var request = indexedDB.open("MyTestDatabase");
+          this.label = this.name+this.verison;
+          request.onerror = function(event) {
+            alert("Database error: " + event.target.errorCode);
+          };
+          request.onsuccess = function(event) {
+            this.db = request.result;
+            lang.hitch(this,'postCreate');
 
+          };
+        },
+
+        postCreate: function(){
+          if(!this.db.objectStoreNames.contains(this.label)){
+               this.objectStore = db.createObjectStore("customers", { autoincrement: true });
+               this.objectStoreCreated();
+          }
+        },
+
+        objectStoreCreated: function(){
+
+        },
+        _getObjectStore: function(mode){
+          return this.db.transaction([this.label], mode)
+                .objectStore(this.label);
+        },
+        add: function(params){
+
+
+              var request = this._getObjectStore().add(params.data);
+              request.onerror = params.error;
+              request.onsuccess = params.callback;
+              //  alert("Name for SSN 444-44-4444 is " + request.result.name);
+              return request;
+        },
+
+        put: function(params){
+            /*
+        params = {
+          data:{name:"rajat",id:"1"},
+          callback: function(){},
+          error: function(){}
+         }
+         */
+                var request = this._getObjectStore().get(params.data[this.keyPath]);
+                request.onerror = params.error;
+                request.onsuccess = function(event){
+                  var data  = request.result;
+                  lang.mixin(data,params.data);
+
+                  var requestUpdate = objectStore.put(data);
+                  requestUpdate.onerror = params.error;
+                  requestUpdate.onsuccess = params.callback;
+                  return requestUpdate;
+                }
+        },
+
+        get: function(keyPath){
+          var request = this._getObjectStore().get(keyPath);
+          request.onerror = params.error;
+          request.onsuccess = params.callback;
+          return request;
+        },
+
+
+
+        list: function(params){
+            /*
+        params = {
+          fields:['name','age'],
+          callback: function(){},
+          error: function(){}
+         }
+         */
+          var list = [];
+          var objectStore = this._getObjectStore("readonly");
+         var request = objectStore.openCursor().onsuccess = function(event) {
+            var cursor = event.target.result;
+            if (cursor) {
+              if(params.fields && params.fields.length && params.fields instanceof Array){
+                var obj = {};
+                obj[cursor.key] = {};
+                for(var i in params.fields){
+                  var fieldName = params.fields[i];
+                  obj[cursor.key][fieldName] = cursor.value[fieldName];
+                  list.push(obj);
+                }
+
+              } else{
+
+                list.push(cursor.key);
+              }
+              cursor.continue();
+            }
+            else {
+              params.callback(list);
+            }
+          };
+
+          request.onerror = params.error;
+
+        }
 
     });
   });
