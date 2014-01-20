@@ -3,7 +3,18 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // The connect task is used to serve static files with a local server.
 // The watch task is used to run tasks in response to file changes
+jshint:{
+  all:{
+      options: {
+        '-W061': true,
+        '-W069': true,
+        '-W099': true
+      },
+      src:['js/rijit/**/*.js']
+    }
+  },
 watch: {
+
   client: {
     // '**' is used to include all subdirectories
     // and subdirectories of subdirectories, and so on, recursively.
@@ -13,19 +24,26 @@ watch: {
     // and since the browser refresh is handled by the snippet.
     // Any other tasks to run (e.g. compile CoffeeScript) go here:
 
-    tasks:[],
+    tasks:['jshint:all'],
      options: {
       livereload: true
 
         // you can pass in any other options you'd like to the https server, as listed here: http://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener
       }
-    
+
 
   }
+
 }
   });
+grunt.loadNpmTasks('grunt-contrib-jshint');
 grunt.loadNpmTasks("grunt-contrib-watch");
-
 grunt.registerTask('preview', ['watch:client']);
+
+grunt.event.on('watch', function(action, filepath, target) {
+  //change the source and destination in the uglify task at run time so that it affects the changed file only
+  grunt.config('jshint.all.src', [filepath]);
+
+});
 
 };

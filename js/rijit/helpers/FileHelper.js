@@ -33,6 +33,7 @@ promise.then(function(blob){
 
         return deffered.promise;
       },
+
       _resizeFile:function(file,maxWidth,maxHeight){
 var deferred = new Deferred();
         var reader = new FileReader();
@@ -92,7 +93,7 @@ canvas.toBlob(function(blob) {
             img.src = theFile.target.result;
 
 
-        }
+        };
               reader.readAsDataURL(file);
 
 return deferred.promise;
@@ -135,7 +136,7 @@ return deferred.promise;
         default:
         msg = 'Unknown file save Error';
         break;
-      };
+      }
 
       console.log('Error: ' + msg);
       alert('Error: ' + msg);

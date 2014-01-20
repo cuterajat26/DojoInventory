@@ -2,15 +2,19 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Stockstitle></title>
+    <title>Stockstitle</title>
     <!-- load Dojo -->
     <script>dojoConfig = {parseOnLoad: true}</script>
     <script src="js/dojo/dojo.js"
                data-dojo-config="async: true"></script>
+               <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" />
+                <link rel="stylesheet" href="js/rijit/themes/style.css" />
+
+
 <!--                    <link href="js/dojox/mobile/themes/iphone/iphone.css" rel="stylesheet"></link>
  -->
-                   <link href="js/dojox/mobile/themes/blackberry/blackberry.css" rel="stylesheet"></link>
-
+<!--                    <link href="js/dojox/mobile/themes/blackberry/blackberry.css" rel="stylesheet"></link>
+ -->
 <script type="text/javascript" src="js/legacy/canvas-toBlob.js"></script>
 <script type="text/javascript" src="js/legacy/FileSaver.js"></script>
 <script type="text/javascript" src="js/bower_components/bongo.js/dist/bongo.min.js" ></script>
@@ -18,26 +22,25 @@
                <script type="text/javascript" src="js/legacy/product.js"></script>
 
 <script>
-require(["dojox/mobile/parser", "dojox/mobile/deviceTheme", "dojox/mobile/compat", "dojox/mobile","dojox/mobile/RoundRectList","dojox/mobile/ListItem",
-    "dojox/mobile/FixedSplitter",
-    "dojox/mobile/Pane",
-    "dojox/mobile/ContentPane",
-    "dojox/mobile/Accordion"],
-    function(parser, deviceTheme) {
- 
-        // Parse the page for widgets!
-        parser.parse();
-    }
-);
+require(["dojo/parser","rijit/TabManager"]);
+
 initDB();
 
 </script>
 
 
 </head>
-<body class="mblBackground" style ="overflow: hidden; visibility: visible;">
 
-<div data-dojo-type="dojox/mobile/FixedSplitter" data-dojo-props='orientation:"H"'>
+<body class="claro" style ="overflow: hidden; visibility: visible;">
+
+<div id='page-header'></div>
+<div id="bodyContent">
+        <div id="primaryTabs" data-dojo-type="rijit.TabManager" style = 'style:"height:100%;width:100%' data-dojo-props=''>
+        </div>
+</div>
+<div id='page-footer'></div>
+
+<!-- <div data-dojo-type="dojox/mobile/FixedSplitter" data-dojo-props='orientation:"H"'>
   <div data-dojo-type="dojox/mobile/Pane" style="border-right:2px black solid;width:300px;">
     <h1 data-dojo-type="dojox.mobile.Heading" data-dojo-props="moveTo:'settings'">
             Navigation
@@ -68,7 +71,7 @@ initDB();
             General
     </h1>
   </div>
-</div>
+</div> -->
 
     </body>
 </html>

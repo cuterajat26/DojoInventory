@@ -4,10 +4,10 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
   "dijit/Menu","dijit/MenuItem","dojo/topic","dojo/dom-construct","dijit/PopupMenuItem","dijit/layout/SplitContainer"],
           function(declare, WidgetBase, TemplatedMixin, WidgetsInTemplateMixin,hash, xhr, array, lang, on,
                           template,domClass,FormHelper,FileHelper,Menu,MenuItem,topic,domConstruct){
-  
+
                   return declare("rijit.controllers.ProductsController", [WidgetBase, TemplatedMixin, WidgetsInTemplateMixin], {
-  
-                         
+
+
                            baseClass: "rijitController",
                           templateString: template,
                           Product:new Product(),
@@ -37,17 +37,16 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                       },
 
                       _onList:function(item){
-                         
+
                       },
                       _addedSubmitted:function(formData){
-                        
+
                     this.formData = formData;
                          this.Product.save(formData, lang.hitch(this,"_addedSuccessfully"));
                       },
                       _addedImageSuccessfully: function(status,result){
                        document.getElementById('debug').innerHTML=  "Product saved successfully";
-                      }
-                      ,
+                      },
                       _updateModelWithFileName:function(fileName){
                                             this.formData['Product']['image']=fileName;
                                             this.Product.save(this.formData, lang.hitch(this,"_addedImageSuccessfully"));
@@ -66,18 +65,18 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                                     var promise=FileHelper.saveFile(this.formData['Product']['image'],fileName);
                                     promise.then(function(result){
                                       self._updateModelWithFileName(result);
-                                      
+
                                     });
-                               
-                                    
+
+
                         }
                         else{
                        document.getElementById('debug').innerHTML=  "Product saved successfully";
 
                         }
 
-                
-                                    
+
+
                       }
                     }
 

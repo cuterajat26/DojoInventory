@@ -39,6 +39,7 @@ define(["dojo/_base/declare",
           if(!this.db.objectStoreNames.contains(this.label)){
                this.objectStore = db.createObjectStore("customers", { autoincrement: true });
                this.objectStoreCreated();
+               
           }
         },
 
@@ -55,6 +56,7 @@ define(["dojo/_base/declare",
               var request = this._getObjectStore().add(params.data);
               request.onerror = params.error;
               request.onsuccess = params.callback;
+              
               //  alert("Name for SSN 444-44-4444 is " + request.result.name);
               return request;
         },
@@ -77,7 +79,7 @@ define(["dojo/_base/declare",
                   requestUpdate.onerror = params.error;
                   requestUpdate.onsuccess = params.callback;
                   return requestUpdate;
-                }
+                };
         },
 
         get: function(keyPath){
@@ -92,7 +94,7 @@ define(["dojo/_base/declare",
         list: function(params){
             /*
         params = {
-          fields:['name','age'],
+          record:true,
           callback: function(){},
           error: function(){}
          }
@@ -101,20 +103,10 @@ define(["dojo/_base/declare",
           var objectStore = this._getObjectStore("readonly");
          var request = objectStore.openCursor().onsuccess = function(event) {
             var cursor = event.target.result;
-            if (cursor) {
-              if(params.fields && params.fields.length && params.fields instanceof Array){
-                var obj = {};
-                obj[cursor.key] = {};
-                for(var i in params.fields){
-                  var fieldName = params.fields[i];
-                  obj[cursor.key][fieldName] = cursor.value[fieldName];
-                  list.push(obj);
-                }
+            if (cursor){
 
-              } else{
+                list.push(params.record?cursor.value:cursor.key);
 
-                list.push(cursor.key);
-              }
               cursor.continue();
             }
             else {

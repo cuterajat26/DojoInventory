@@ -3,10 +3,10 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
   "dojo/query","dojo/dom-attr"],
           function(declare, WidgetBase, TemplatedMixin, WidgetsInTemplateMixin,ValidationTextBox,Button,domConstruct,
             lang,array,on,query,domAttr){
-  
+
                   return declare("rijit.helpers.FormHelper", null, {
-  
-                         
+
+
                            baseClass: "rijitForm",
                       model:null,
                       modelName:null,
@@ -24,7 +24,7 @@ var errorHandler = function(e){
                                       window.requestFileSystem(window.PERSISTENT, grantedBytes, function(fs) {
                                       // Duplicate each file the user selected to the app's fs.
 
-                                       
+
                                          fs.root.getFile('30_Landscape-wallpaper 665.jpg', {}, function(fileEntry) {
 
     // Get a File object representing the file,
@@ -43,7 +43,7 @@ var errorHandler = function(e){
   }, errorHandler);
 
 
-                                      
+
                                     }, errorHandler);
 
                                           }, function(e) {
@@ -51,7 +51,7 @@ var errorHandler = function(e){
                                           });
 
                         this.modelName = arg;
-                        this.fields = new Array();
+                        this.fields = [];
 
                          this.model = eval("new " + arg+"();");
                         this.domNode = domConstruct.create("div",{class:"form "+arg});
@@ -66,16 +66,16 @@ var errorHandler = function(e){
                         }
                         var divField = domConstruct.create("div", {class:"form-row-file"}, this.domNode,"last");
                         var inputField = domConstruct.create("input", {id:field,class:"file",type:"file"}, divField,"last");
-                        
+
 
                         var labelField = domConstruct.create("div", {class:"title"}, divField,"last");
 
                         labelField.innerHTML='<p>'+(options.title?options.title:"Drop files here")+'</p>';
 
 
-                          
+
                         on(inputField, "change", lang.hitch(this, "_handleFileSelect"));
-    
+
                       },
                       _handleFileSelect: function(evt){
                          var files = evt.target.files; // FileList object
@@ -87,8 +87,8 @@ var self = this;
       reader.onload = function(theFile) {
           // Render thumbnail.
 
-                      
-         var n1 = query('.title',evt.target.parent)
+
+         var n1 = query('.title',evt.target.parent);
       n1[0].innerHTML = ['<img class="thumb" src="', theFile.target.result,
                             '" title="', "Image", '"/>'].join('');
       };
@@ -97,7 +97,7 @@ var self = this;
 
 
       // Read in the image file as a data URL.
-     
+
       reader.readAsDataURL(files[0]);
        files[0].id=domAttr.get(evt.target,"id");
 self.fields.push(files[0]);
@@ -120,7 +120,7 @@ self.fields.push(files[0]);
                         var divField = domConstruct.create("div", {class:"form-row"}, this.domNode,"last");
                         var labelField = domConstruct.create("div", {class:"form-row-field"}, divField,"last");
                         labelField.innerHTML=field;
-                        var labelField = domConstruct.create("div", {class:"form-row-value"}, divField,"last");
+                        labelField = domConstruct.create("div", {class:"form-row-value"}, divField,"last");
 
                         options.required=true;
                         if(this.model.validation[field]['required']===false){
@@ -129,18 +129,18 @@ self.fields.push(files[0]);
                         else if(this.model.validation[field]['rule'] !== "notempty"){
                         options.regExp=this.model.validationHash[this.model.validation[field]['rule']].source;
                         }
-                        
+
                      options.missingMessage = options.invalidMessage=this.model.validation[field]['message'];
 
-                        var field = new ValidationTextBox(options,labelField);
+                        field = new ValidationTextBox(options,labelField);
                         field.startup();
                         this.fields.push(field);
 
                       },
                       _getData:function(){
                         var modelName = this.modelName;
-                        var modelobject = new Array();
-                        modelobject[modelName]=new Array();
+                        var modelobject = [];
+                        modelobject[modelName]=[];
                         array.forEach(this.fields, function(entry, i){
                           if(entry instanceof File){
                             modelobject[modelName][entry.id] = entry;
@@ -155,21 +155,21 @@ self.fields.push(files[0]);
                         var arg={
                         label : label,
                         onClick:lang.hitch(this,"submit",callBack)
-                        }
+                        };
                          var divField = domConstruct.create("div", {class:"form-row"}, this.domNode,"last");
 
                         var button = new Button(arg,divField);
                         button.startup();
                       },
                       submit:function(callBack){
-                      
+
                        var formData = this._getData();
                        callBack(formData);
                       },
                       _saveCallBack:function(status,result){
-                        
+
                       }
-                      
+
 
                   });
 });

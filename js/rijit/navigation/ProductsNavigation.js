@@ -4,24 +4,24 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
   "rijit/controllers/ProductsController","components/bongo","dojo/fx","dijit/PopupMenuItem","dijit/layout/SplitContainer","dojo/NodeList-traverse"],
           function(declare, WidgetBase, TemplatedMixin, WidgetsInTemplateMixin,hash, xhr, array, lang, on,
                           template,domClass,Menu,MenuItem,topic,domConstruct,query,domStyle,ProductsController,bongo,coreFx){
-  
+
                   return declare("rijit.navigation.ProductsNavigation", [WidgetBase, TemplatedMixin, WidgetsInTemplateMixin], {
-  
+
                           /*
                            * TODO: Filter tree by region and fabric.
                            * TODO: Update tree when region and fabric changes
                            * TODO: Figure out why the toggles are not showing up
                            */
-  
+
                            baseClass: "rijitNavigation",
                           templateString: template,
-                      
-  
+
+
                       postCreate: function(){
                                   console.log(bongo);
                                   this.inherited(arguments);
                                   console.log(this.mainMenu);
-                                  this.items = new Array();
+                                  this.items = [];
                                   this.itemReferenceMap = {};
                                   this.mainMenu.addChild(new MenuItem({
                                     label:"Add product",
@@ -39,7 +39,7 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                                   /*topic.subscribe("/dojo/hashchange", function(hashstr){
                                     if(hashstr === "products_listProduct")
                                       on.emit(listProductMenuItem,"click",{cancelable:true,bubbles:false});
-                                                
+
                                   });*/
 
                                   //this.mainMenu.startup();
@@ -68,19 +68,19 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
                             }
 
                                domStyle.set(allChildren[i],"opacity",0);
-  
+
       //                          var fadeArgs = {
       //   node: allChildren[i],
       //   duration: 300,
 
       // };
       // dojo.fadeOut(fadeArgs).play();
- 
+
   }
 
 
                             //domStyle.set(allChildren[i],"visibility","hidden");
-                          
+
                           if(targetDom){
                                domConstruct.place(targetDom, this.navigation.contentNode.containerNode, "first");
 
@@ -93,7 +93,7 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
 
                             }
 
-                        
+
                         if(divAlreadyExists)
                           return;
                         var divDate = domConstruct.create("div", {id:str+"_container",class:"actionContent"}, this.navigation.contentNode.containerNode,"first");
