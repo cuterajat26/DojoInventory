@@ -58,7 +58,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/layout/TabContainer", "d
 			startup: function(){
 
 				/*
-				 * Programmatically created Gijits should not make a call to startup. However, startup does seem to get
+				 * Programmatically created rijits should not make a call to startup. However, startup does seem to get
 				 * called when programmatically creating a TabContainer. This causes issues. If the TabContainer has
 				 * no children (or no tabs) then startup is skipped.
 				 *

@@ -39,7 +39,7 @@ define([ "dojo/_base/declare",
 	 *  different nav sections(s).
 	 *
 	 *
-	 * @name gijit.navigation.NavPlugin
+	 * @name rijit.navigation.NavPlugin
 	 * @constructor
 	 * @param {Object} params
 	 * @param {DomNode,String} srcRefNode
@@ -47,7 +47,7 @@ define([ "dojo/_base/declare",
 
 	    return declare("rijit.navigation.NavPlugin", [ WidgetBase, _LayoutWidget, TemplatedMixin,
 		    WidgetsInTemplateMixin ], {
-		/** @lends gijit.navigation.NavPlugin# */
+		/** @lends rijit.navigation.NavPlugin# */
 
 		baseClass : "rijitNavPlugin",
 		templateString : template,
