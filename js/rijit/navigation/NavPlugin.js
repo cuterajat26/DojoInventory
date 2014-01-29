@@ -9,9 +9,12 @@ define([ "dojo/_base/declare",
 	"dojo/on",
 	"rijit/navigation/NavigationManager",
 	"rijit/navigation/hash",
+	"rijit/navigation/NavPluginContent",
+	"rijit/navigation/NavSection",
 	"dojo/json",
 	"dojo/dom-construct",
 	"dojo/text!./templates/NavPlugin.html",
+	"dijit/layout/AccordionContainer",
 	"dijit/layout/ContentPane",
 	"dijit/layout/BorderContainer",
 
@@ -28,9 +31,12 @@ define([ "dojo/_base/declare",
 	on,
 	navMngr,
 	Hash,
+	NavPluginContent,
+	NavSection,
 	JSON,
 	domConstruct,
 	template,
+	AccordionContainer,
 	ContentPane,
 	BorderContainer
 ) {
@@ -62,6 +68,45 @@ define([ "dojo/_base/declare",
 		accordian : null,
 		hash : null,
 		buildingNavTree : false,
+		constructor: function(){
+
+		},
+		postCreate: function(){
+			this.inherited(arguments);
+			this._buildNavigation();
+		},
+		_buildNavigation:function(){
+			this._setupAccordion();
+			this._buildNavigationSections();
+			this.layout();
+
+		},
+		_buildNavigationSections: function(){
+			for(var i = 0; i < 1; i++){
+				var divNavSection = domConstruct.create("div", {});
+				var navSection =   new NavSection({
+				style : "height: 100%; width: 100%;"
+			},divNavSection);
+				navSection.startup();
+				this.accordian.addChild(new ContentPane({
+					title : 'Items',
+					content : navSection
+				}));
+			}
+		},
+		_setupAccordion: function(){
+			if (this.accordian) {
+				this.accordian.destroyDescendants();
+				this.accordian.destroyRecursive();
+				this.accordian = null;
+
+			}
+			var divAccordian = domConstruct.create("div", {}, this.navigation, "first");
+			this.accordian = new AccordionContainer({
+				style : "height: 100%; width: 100%;"
+			}, divAccordian);
+			this.accordian.startup();
+		},
 		layout : function() {
 			var children = this.getChildren();
 			for ( var c in children) {
@@ -69,7 +114,8 @@ define([ "dojo/_base/declare",
 					children[c].resize(this._contentBox);
 				}
 			}
-		}
+		},
+
 		});
 
 	});

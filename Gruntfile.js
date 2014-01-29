@@ -8,7 +8,8 @@ jshint:{
       options: {
         '-W061': true,
         '-W069': true,
-        '-W099': true
+        '-W099': true,
+        '-W014': true
       },
       src:['js/rijit/**/*.js']
     }

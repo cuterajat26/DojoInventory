@@ -21,6 +21,7 @@ define([
 				this.addChild(new ContentPane({
 									title: "hello",
 									selected: true,
+									style:"height:100%",
 									content: navPlugin
 								}));
 				navPlugin.startup();
@@ -39,6 +40,7 @@ define([
 									content: navPlugin
 								}));
 				navPlugin.startup();
+				this.inherited(arguments);
 			}
 	});
 });

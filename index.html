@@ -22,7 +22,7 @@
                <script type="text/javascript" src="js/legacy/product.js"></script>
 
 <script>
-require(["dojo/parser","rijit/TabManager"]);
+require(["dojo/parser"]);
 
 initDB();
 
@@ -31,13 +31,11 @@ initDB();
 
 </head>
 
-<body class="claro" style ="overflow: hidden; visibility: visible;">
+<body class="claro" >
 
 <div id='page-header'></div>
-<div id="bodyContent">
-        <div id="primaryTabs" data-dojo-type="rijit.TabManager" style = 'style:"height:100%;width:100%' data-dojo-props=''>
+        <div id="primaryTabs" data-dojo-type="rijit/TabManager" style = "height:100%;width:100%" >
         </div>
-</div>
 <div id='page-footer'></div>
 
 <!-- <div data-dojo-type="dojox/mobile/FixedSplitter" data-dojo-props='orientation:"H"'>
