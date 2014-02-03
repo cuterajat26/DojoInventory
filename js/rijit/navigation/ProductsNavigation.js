@@ -1,9 +1,9 @@
 define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin","dojo/hash",
   "dojo/_base/xhr","dojo/_base/array", "dojo/_base/lang", "dojo/on","dojo/text!./templates/ProductsNavigation.html",
   "dojo/dom-class","dijit/Menu","dijit/MenuItem","dojo/topic","dojo/dom-construct","dojo/query","dojo/dom-style",
-  "rijit/controllers/ProductsController","components/bongo","dojo/fx","dijit/PopupMenuItem","dijit/layout/SplitContainer","dojo/NodeList-traverse"],
+  "rijit/controllers/ProductsController","dojo/fx","dijit/PopupMenuItem","dijit/layout/SplitContainer","dojo/NodeList-traverse"],
           function(declare, WidgetBase, TemplatedMixin, WidgetsInTemplateMixin,hash, xhr, array, lang, on,
-                          template,domClass,Menu,MenuItem,topic,domConstruct,query,domStyle,ProductsController,bongo,coreFx){
+                          template,domClass,Menu,MenuItem,topic,domConstruct,query,domStyle,ProductsController,coreFx){
 
                   return declare("rijit.navigation.ProductsNavigation", [WidgetBase, TemplatedMixin, WidgetsInTemplateMixin], {
 
@@ -96,7 +96,7 @@ define(["dojo/_base/declare", "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dij
 
                         if(divAlreadyExists)
                           return;
-                        var divDate = domConstruct.create("div", {id:str+"_container",class:"actionContent"}, this.navigation.contentNode.containerNode,"first");
+                        var divDate = domConstruct.create("div", {id:str+"_container","class":"actionContent"}, this.navigation.contentNode.containerNode,"first");
                         this.productController = new ProductsController({name:this.label,action:this.id},divDate);
                         this.productController.startup();
 

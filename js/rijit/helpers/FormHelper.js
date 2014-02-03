@@ -54,7 +54,7 @@ var errorHandler = function(e){
                         this.fields = [];
 
                          this.model = eval("new " + arg+"();");
-                        this.domNode = domConstruct.create("div",{class:"form "+arg});
+                        this.domNode = domConstruct.create("div",{"class":"form "+arg});
                         return this.domNode;
                       },
                       _inputFile:function(field,options){
@@ -64,11 +64,11 @@ var errorHandler = function(e){
                           options = {};
                           options.id=field;
                         }
-                        var divField = domConstruct.create("div", {class:"form-row-file"}, this.domNode,"last");
-                        var inputField = domConstruct.create("input", {id:field,class:"file",type:"file"}, divField,"last");
+                        var divField = domConstruct.create("div", {"class":"form-row-file"}, this.domNode,"last");
+                        var inputField = domConstruct.create("input", {id:field,"class":"file",type:"file"}, divField,"last");
 
 
-                        var labelField = domConstruct.create("div", {class:"title"}, divField,"last");
+                        var labelField = domConstruct.create("div", {"class":"title"}, divField,"last");
 
                         labelField.innerHTML='<p>'+(options.title?options.title:"Drop files here")+'</p>';
 
@@ -117,10 +117,10 @@ self.fields.push(files[0]);
                           options = {};
                           options.id=field;
                         }
-                        var divField = domConstruct.create("div", {class:"form-row"}, this.domNode,"last");
-                        var labelField = domConstruct.create("div", {class:"form-row-field"}, divField,"last");
+                        var divField = domConstruct.create("div", {"class":"form-row"}, this.domNode,"last");
+                        var labelField = domConstruct.create("div", {"class":"form-row-field"}, divField,"last");
                         labelField.innerHTML=field;
-                        labelField = domConstruct.create("div", {class:"form-row-value"}, divField,"last");
+                        labelField = domConstruct.create("div", {"class":"form-row-value"}, divField,"last");
 
                         options.required=true;
                         if(this.model.validation[field]['required']===false){
@@ -156,7 +156,7 @@ self.fields.push(files[0]);
                         label : label,
                         onClick:lang.hitch(this,"submit",callBack)
                         };
-                         var divField = domConstruct.create("div", {class:"form-row"}, this.domNode,"last");
+                         var divField = domConstruct.create("div", {"class":"form-row"}, this.domNode,"last");
 
                         var button = new Button(arg,divField);
                         button.startup();

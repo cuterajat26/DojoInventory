@@ -35,10 +35,22 @@ watch: {
 
   }
 
-}
+},
+shell: {                                // Task
+        dojoBuild: {                        // Target
+            options: {                        // Options
+                stdout: true
+            },
+            command: 'js/util/buildscripts/build.sh --profile js/dojo-build.profile.js'
+        }
+    }
   });
 grunt.loadNpmTasks('grunt-contrib-jshint');
 grunt.loadNpmTasks("grunt-contrib-watch");
+grunt.loadNpmTasks('grunt-shell');
+
+grunt.registerTask('build', ['shell:dojoBuild']);
+
 grunt.registerTask('preview', ['watch:client']);
 
 grunt.event.on('watch', function(action, filepath, target) {

@@ -1,0 +1,27 @@
+{
+	"sca_name":"MockProduct",
+	"sca_version":1,
+	"display_property":"name",
+	"properties":[
+		{
+			"property_name":"id",
+			"propert_version":1,
+			"property_type" : "number"
+		},
+		{
+			"property_name":"name",
+			"propert_version":1,
+			"property_type" : "string"
+		},
+		{
+			"property_name":"description",
+			"propert_version":1,
+			"property_type" : "string"
+		},
+		{
+			"property_name":"color",
+			"propert_version":1,
+			"property_type" : "string"
+		}
+	]
+}

@@ -4,9 +4,24 @@
     <meta charset="utf-8">
     <title>Stockstitle</title>
     <!-- load Dojo -->
-    <script>dojoConfig = {parseOnLoad: true}</script>
+    <script>
+var dojoConfig = (function(){
+        return {
+          async: true,
+          parseOnLoad: true
+        };
+    })();
+
+    </script>
+
+<!--         <script src="js/bower_components/dojo/dojo.js.uncompressed.js"
+               data-dojo-config="async: true"></script>
+
+                <script type="text/javascript" src="js/bower_components/dojo/rijit.manage.js.uncompressed.js"></script> -->
+
     <script src="js/dojo/dojo.js"
                data-dojo-config="async: true"></script>
+
                <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" />
                 <link rel="stylesheet" href="js/rijit/themes/style.css" />
 

@@ -24,7 +24,7 @@ define(["dojo/_base/declare",
         objectStore: null,
         constructor: function() {
           var request = indexedDB.open("MyTestDatabase");
-          this.label = this.name+this.verison;
+          this.label = this.name + this.verison;
           request.onerror = function(event) {
             alert("Database error: " + event.target.errorCode);
           };
@@ -39,7 +39,7 @@ define(["dojo/_base/declare",
           if(!this.db.objectStoreNames.contains(this.label)){
                this.objectStore = db.createObjectStore("customers", { autoincrement: true });
                this.objectStoreCreated();
-               
+
           }
         },
 
@@ -47,16 +47,14 @@ define(["dojo/_base/declare",
 
         },
         _getObjectStore: function(mode){
-          return this.db.transaction([this.label], mode)
-                .objectStore(this.label);
+          return this.db.transaction([this.label], mode).objectStore(this.label);
         },
         add: function(params){
-
 
               var request = this._getObjectStore().add(params.data);
               request.onerror = params.error;
               request.onsuccess = params.callback;
-              
+
               //  alert("Name for SSN 444-44-4444 is " + request.result.name);
               return request;
         },
@@ -101,13 +99,14 @@ define(["dojo/_base/declare",
          */
           var list = [];
           var objectStore = this._getObjectStore("readonly");
-         var request = objectStore.openCursor().onsuccess = function(event) {
+         var request = objectStore.openCursor();
+         request.onsuccess = function(event) {
             var cursor = event.target.result;
             if (cursor){
 
-                list.push(params.record?cursor.value:cursor.key);
+                list.push(params.record?cursor.value: cursor.key);
 
-              cursor.continue();
+              cursor['continue'].call();
             }
             else {
               params.callback(list);
