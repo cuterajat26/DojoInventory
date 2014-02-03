@@ -7,7 +7,7 @@ var profile = (function() {
 	action : "release",
 	layerOptimize : "shrinksafe",
 	optimize : "shrinksafe",
-	cssOptimize : "comments",
+	cssOptimize : "comments.keepLines",
 	mini : true,
 	stripConsole : "all",
 	selectorEngine : "lite",
